@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new{
   my ($class) = @_;
@@ -86,7 +86,7 @@ __END__
 
 =head1 NAME
 
-Text::Find::Variable - Find scalar names in a text.
+Text::Find::Scalar - Find scalar names in a text.
 
 =head1 SYNOPSIS
 
@@ -113,30 +113,42 @@ e.g. in Error messages.
 =head2 new
 
   my $finder = Text::Find::Scalar->new();
+  
+creates a new Text::Find::Scalar object.
 
 =head2 find
 
   my $string = q~Test $test $foo '$bar'~;
   my $arrayref = $finder->find($string);
+  
+parses the text and returns an arrayref that contains all matches.
 
 =head2 hasNext
 
   while($finder->hasNext()){
     print $finder->nextElement();
   }
+  
+returns 1 unless the user walked through all matches.
 
 =head2 nextElement
 
   print $finder->nextElement();
   print $finder->nextElement();
+  
+returns the next element in list.
 
 =head2 unique
 
   my $uniquenames = $finder->unique();
+  
+returns an arrayref with a list of all scalars, but each match appears just once.
 
 =head2 count
 
   my $counter = $finder->count('$foo');
+  
+returns the number of appearances of one scalar.
 
 =head1 AUTHOR
 
