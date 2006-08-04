@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub new{
   my ($class) = @_;
@@ -30,7 +30,7 @@ sub find{
     @array = grep{defined}@array;
   }
   $self->_Elements(@array);
-  return $self->_Elements();
+  return wantarray ? @{$self->_Elements()} : $self->_Elements();
 }# find
 
 sub unique{
@@ -120,6 +120,7 @@ creates a new Text::Find::Scalar object.
 
   my $string = q~Test $test $foo '$bar'~;
   my $arrayref = $finder->find($string);
+  my @found    = $finder->find($string);
   
 parses the text and returns an arrayref that contains all matches.
 

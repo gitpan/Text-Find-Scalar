@@ -4,3 +4,4 @@ MANIFEST
 README
 t/Text-Find-Scalar.t
 lib/Text/Find/Scalar.pm
+META.yml                                 Module meta-data (added by MakeMaker)
