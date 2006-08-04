@@ -3,9 +3,8 @@ package Text::Find::Scalar;
 use 5.006001;
 use strict;
 use warnings;
-use Data::Dumper;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub new{
   my ($class) = @_;
@@ -108,12 +107,71 @@ This Class helps to find all Scalar variables in a text. It is recommended to
 use L<PPI> to parse Perl programs. This module should help to find SCALAR names
 e.g. in Error messages.
 
+Scalars that should be found:
+
+=over 10
+
+=item * double quoted
+
+  "$foo"
+
+=item * references
+
+  $foo->{bar}
+
+
+=item * elements of arrays
+
+  $array[0]
+
+=back
+
+Scalars that are not covered
+
+=over 10
+
+=item * single quoted
+
+  '$foo'
+
+=item
+
+=back
+
+=head1 EXAMPLE
+
+  #!/usr/bin/perl
+  
+  use strict;
+  use warnings;
+  
+  use Text::Find::Scalar;
+  
+  my $string = q~This is a $variable
+         another $variable and another "$eine", but '$no' is not found.
+         A $reference->{$key} is found. An array element $array[0]
+         is also found~;
+  
+  my $finder = Text::Find::Scalar->new();
+  my @scalars = $finder->find($string);
+  
+  print $_,"\n" for(@scalars);
+
+prints
+
+  /homes/reneeb/community>find_scalar.pl
+  $variable
+  $variable
+  $eine
+  $reference->{$key}
+  $array[0]
+
 =head1 METHODS
 
 =head2 new
 
   my $finder = Text::Find::Scalar->new();
-  
+
 creates a new Text::Find::Scalar object.
 
 =head2 find
@@ -121,7 +179,7 @@ creates a new Text::Find::Scalar object.
   my $string = q~Test $test $foo '$bar'~;
   my $arrayref = $finder->find($string);
   my @found    = $finder->find($string);
-  
+
 parses the text and returns an arrayref that contains all matches.
 
 =head2 hasNext
@@ -129,27 +187,35 @@ parses the text and returns an arrayref that contains all matches.
   while($finder->hasNext()){
     print $finder->nextElement();
   }
-  
+
 returns 1 unless the user walked through all matches.
 
 =head2 nextElement
 
   print $finder->nextElement();
   print $finder->nextElement();
-  
+
 returns the next element in list.
 
 =head2 unique
 
   my $uniquenames = $finder->unique();
-  
+
 returns an arrayref with a list of all scalars, but each match appears just once.
 
 =head2 count
 
   my $counter = $finder->count('$foo');
-  
+
 returns the number of appearances of one scalar.
+
+=head2 "private" methods
+
+=head3 _Elements
+
+returns an arrayref of all scalars found in the text
+
+=head3 _Counter
 
 =head1 AUTHOR
 

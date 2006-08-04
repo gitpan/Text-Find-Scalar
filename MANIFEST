@@ -3,5 +3,7 @@ Makefile.PL
 MANIFEST
 README
 t/Text-Find-Scalar.t
+t/Text-Find-Scalar_pod.t
+t/Text-Find-Scalar_pod_coverage.t
 lib/Text/Find/Scalar.pm
 META.yml                                 Module meta-data (added by MakeMaker)

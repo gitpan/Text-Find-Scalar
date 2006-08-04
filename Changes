@@ -7,3 +7,10 @@ Revision history for Perl extension Text::Find::Scalar.
 0.02  Sat Feb 11 02:23:13 2006
     - more documentation
     - minor bug in documentation fixed
+    
+0.03  Fri Aug 04 12:33:52 2006
+    - added wantarray to find method
+
+0.04  Fri Aug 04 19:36:23 2006
+    - more documentation (thanks to Corion)
+    - more tests
